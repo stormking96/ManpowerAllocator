@@ -9,18 +9,15 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,6 +26,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -219,10 +217,10 @@ public class ManpowerAllocator extends JFrame
         Font f = new Font("Times", Font.PLAIN, 40);
         
         JTextArea nameUneditableText = new JTextArea("Name:");
-        formatTextField(nameUneditableText, false, f);
+        formatTextField(nameUneditableText, false, Color.WHITE, f);
         
         JTextArea comma = new JTextArea(" , ");
-        formatTextField(comma, false, f); 
+        formatTextField(comma, false, Color.WHITE, f); 
         
         JTextField lastNameBox = new JTextField("Last", 12);
         lastNameBox.setFont(f);
@@ -231,13 +229,13 @@ public class ManpowerAllocator extends JFrame
         firstNameBox.setFont(f);
         
         JTextArea employeeIDText = new JTextArea("Employee ID:");
-        formatTextField(employeeIDText, false, f);
+        formatTextField(employeeIDText, false, Color.WHITE, f);
         
         JTextField employeeIDInput = new JTextField("12345", 4);
         employeeIDInput.setFont(f);
         
         JTextArea seniorityDateText = new JTextArea("Seniority Date:");
-        formatTextField(seniorityDateText, false, f);
+        formatTextField(seniorityDateText, false, Color.WHITE, f);
         
         JComboBox seniorityDateInputMonth = new JComboBox(MONTHS);
         seniorityDateInputMonth.setFont(f);
@@ -249,13 +247,13 @@ public class ManpowerAllocator extends JFrame
         seniorityDateInputYear.setFont(f);
                 
         JTextArea slash1 = new JTextArea("/");
-        formatTextField(slash1, false, f);
+        formatTextField(slash1, false, Color.WHITE, f);
         
         JTextArea slash2 = new JTextArea("/");
-        formatTextField(slash2, false, f);
+        formatTextField(slash2, false, Color.WHITE, f);
         
         JTextArea utilityText = new JTextArea("Utility?");
-        formatTextField(utilityText, false, f);
+        formatTextField(utilityText, false, Color.WHITE, f);
         
         JComboBox yesOrNo = new JComboBox();
         yesOrNo.addItem("Yes");
@@ -263,13 +261,13 @@ public class ManpowerAllocator extends JFrame
         yesOrNo.setFont(f);
         
         JTextArea primaryJobText = new JTextArea("Primary Job:");
-        formatTextField(primaryJobText, false, f);
+        formatTextField(primaryJobText, false, Color.WHITE, f);
         
         JComboBox primaryJobSelection = new JComboBox(JOBS);
         primaryJobSelection.setFont(f);
         
         JTextArea secondaryJobText = new JTextArea("Secondary Job:");
-        formatTextField(secondaryJobText, false, f);
+        formatTextField(secondaryJobText, false, Color.WHITE, f);
         
         JList container = new JList();
         container.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -291,7 +289,7 @@ public class ManpowerAllocator extends JFrame
         secondaryJobsPane.setPreferredSize(new Dimension(260, 200));
         
         JTextArea notesText = new JTextArea("Notes:");
-        formatTextField(notesText, false, f);
+        formatTextField(notesText, false, Color.WHITE, f);
         
         JTextArea notesInput = new JTextArea("N/A", 2, 20);
         notesInput.setLineWrap(true);
@@ -337,7 +335,8 @@ public class ManpowerAllocator extends JFrame
                     //Handle Later
                 }
                 addEmployeeNameToConfirmationScreen(newEmployee);
-                
+                resetAllFields(lastNameBox, firstNameBox, employeeIDInput, seniorityDateInputMonth, seniorityDateInputDay,
+                        seniorityDateInputYear, yesOrNo, primaryJobSelection, secondaryJobsPane, notesInput);
                 newEmployeeScreen.setVisible(false);
                 newEmployeeConfirmationScreen.setVisible(true);
                 
@@ -389,6 +388,7 @@ public class ManpowerAllocator extends JFrame
     private static JPanel createNewEmployeeConfrimationScreen()
     {
         newEmployeeConfirmationPanel = new JPanel();
+        newEmployeeConfirmationPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 80, 50));
         GridBagLayout layout = new GridBagLayout();
         newEmployeeConfirmationPanel.setLayout(layout);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -398,12 +398,43 @@ public class ManpowerAllocator extends JFrame
         Font f = new Font("Times", Font.PLAIN, 40);
         
         JTextArea newEmployeeConfirmationText = new JTextArea(" successfully added.");
-        formatTextField(newEmployeeConfirmationText, false, f);
+        formatTextField(newEmployeeConfirmationText, false, Color.GREEN, f);
         
-        JTextArea bufferZone = new JTextArea();
+        JButton nextNewEmployeeButton = new JButton("Add Another Employee");
+        nextNewEmployeeButton.setFont(f);
+        nextNewEmployeeButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                newEmployeeConfirmationScreen.setVisible(false);
+                newEmployeeScreen.setVisible(true);
+            }
         
-        addObjects(newEmployeeConfirmationText, newEmployeeConfirmationPanel, layout, gbc, 4, 0, 1, 1, 1, 1);
+        });
         
+        JButton mainMenuButton = new JButton(" Return to Main Menu ");
+        mainMenuButton.setFont(f);
+        mainMenuButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                newEmployeeConfirmationScreen.setVisible(false);
+                welcomeScreenPanels[0].setVisible(true);
+                welcomeScreenPanels[1].setVisible(true);
+            }
+        
+        });
+        
+        gbc.anchor = GridBagConstraints.LINE_START;
+        addObjects(newEmployeeConfirmationText, newEmployeeConfirmationPanel, layout, gbc, 1, 0, 1, 1, 1, 1);
+        gbc.ipadx = 0;
+        gbc.ipady = 160;
+        addObjects(nextNewEmployeeButton, newEmployeeConfirmationPanel, layout, gbc, 1, 1, 1, 1, 1, 1);
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.insets = new Insets(0,0,0,20);
+        addObjects(mainMenuButton, newEmployeeConfirmationPanel, layout, gbc, 0, 1, 1, 1, 1, 1);
         return newEmployeeConfirmationPanel;
     }
     
@@ -412,12 +443,16 @@ public class ManpowerAllocator extends JFrame
         GridBagConstraints gbc = new GridBagConstraints();
         GridBagLayout layout = new GridBagLayout();
         
-        Font f = new Font("Times", Font.PLAIN, 40);
+        Font f = new Font("Times", Font.BOLD, 40);
         
         JTextArea newEmployeeName = new JTextArea(newEmployee.getLastName() + ", " + newEmployee.getFirstName());
-        formatTextField(newEmployeeName, false, f);
+        formatTextField(newEmployeeName, false, Color.WHITE, f);
         
-        addObjects(newEmployeeName, newEmployeeConfirmationPanel, layout, gbc, 3, 0, 1, 1, .1, 1);
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.insets = new Insets(0,0,0,20);
+        gbc.ipadx = 30;
+
+        addObjects(newEmployeeName, newEmployeeConfirmationPanel, layout, gbc, 0, 0, 1, 1, 1, 1);
     }
     
     private static void addObjects(Component componente, Container yourcontainer, GridBagLayout layout, GridBagConstraints gbc, int x, int y, int gridwidth, int gridheight, double gridWeightX, double gridWeightY)
@@ -435,10 +470,33 @@ public class ManpowerAllocator extends JFrame
         
     }
     
-    public static void formatTextField(JTextComponent textFieldToFormat, boolean isEditable, Font f)
+    private static void resetAllFields(JTextField last, JTextField first, JTextField id, JComboBox mm, JComboBox dd, JComboBox yy,
+            JComboBox yOrN, JComboBox pJob, JScrollPane scrollBar, JTextArea notes)
+    {
+        last.setText("Last");
+        first.setText("First");
+        id.setText("12345");
+        mm.setSelectedIndex(0);
+        dd.setSelectedIndex(0);
+        yy.setSelectedIndex(0);
+        yOrN.setSelectedIndex(0);
+        pJob.setSelectedIndex(0);
+        for (JCheckBox currentBox : checkBoxes) 
+        {
+            if(currentBox.isSelected())
+            {
+                currentBox.setSelected(false);
+            }
+        }
+        JScrollBar verticalScrollBar = scrollBar.getVerticalScrollBar();
+        verticalScrollBar.setValue(verticalScrollBar.getMinimum());
+        notes.setText("N/A");
+    }
+    
+    public static void formatTextField(JTextComponent textFieldToFormat, boolean isEditable, Color fontColor, Font f)
     {
         textFieldToFormat.setBackground(Color.DARK_GRAY);
-        textFieldToFormat.setForeground(Color.WHITE);
+        textFieldToFormat.setForeground(fontColor);
         textFieldToFormat.setEditable(isEditable);
         textFieldToFormat.setFont(f);
     }
