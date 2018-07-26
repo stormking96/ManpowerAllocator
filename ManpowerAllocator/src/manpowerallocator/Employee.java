@@ -7,32 +7,19 @@ public class Employee
     String firstName;
     String lastName;
     String employeeID;
-    String seniorityMonth;
-    String seniorityDay;
-    String seniorityYear;
-    boolean utility;
+    String seniorityDate;
+    String gradePay;
     String primaryJob;
     ArrayList<String> secondaryJob = new ArrayList<>();
     String notes;
     
-    public Employee(String last, String first, String ID, String seniorMM, String seniorDD, String seniorYY, String isUtil, String pJob, ArrayList<String> sJob, String note)
+    public Employee(String last, String first, String ID, String seniorDate, String gradePaySelection, String pJob, ArrayList<String> sJob, String note)
     {
         firstName = first;
         lastName = last;
         employeeID = ID;
-        seniorityMonth = seniorMM;
-        seniorityDay = seniorDD;
-        seniorityYear = seniorYY;
-        
-        if(isUtil.equals("Yes"))
-        {
-            utility = true;
-        }
-        else
-        {
-            utility = false;
-        }
-        
+        seniorityDate = seniorDate;
+        gradePay = gradePaySelection;
         primaryJob = pJob;
         secondaryJob = (ArrayList<String>) sJob.clone();
         notes = note;
@@ -43,10 +30,8 @@ public class Employee
         firstName = null;
         lastName = null;
         employeeID = null;
-        seniorityMonth = null;
-        seniorityDay = null;
-        seniorityYear = null;
-        utility = false;
+        seniorityDate = null;
+        gradePay = null;
         primaryJob = null;
         secondaryJob = null;
         notes = null;     
@@ -82,34 +67,24 @@ public class Employee
         return employeeID;
     }
     
-    public void setSeniorityDate(String seniorityMM, String seniorityDD, String seniorityYY)
+    public void setSeniorityDate(String seniorityMMDDYY)
     {
-        seniorityMonth = seniorityMM;
-        seniorityDay = seniorityDD;
-        seniorityYear = seniorityYY;
+        seniorityDate = seniorityMMDDYY;
     }
     
-    public String[] getSeniorityDate()
+    public String getSeniorityDate()
     {  
-        String[] seniorityDate = {seniorityMonth, seniorityDay, seniorityYear};
         return seniorityDate;
     }
     
-    public void setUtility(String utilityYOrN)
+    public void setGradePay(String gradePaySelection)
     {
-        if(utilityYOrN.equals("Yes"))
-        {
-            utility = true;
-        }
-        else
-        {
-            utility = false;
-        }
+        gradePay = gradePaySelection;
     }
     
-    public boolean isUtility()
+    public String getGradePay()
     {
-        return utility;
+        return gradePay;
     }
     
     public void setPrimaryJob(String primary)
@@ -157,9 +132,8 @@ public class Employee
     public String toString()
     {
         String stringToPrint = this.employeeID + "*" + this.lastName + "*" + this.firstName + "*"
-                + this.seniorityMonth + "*" + this.seniorityDay + "*" + this.seniorityYear + "*"
-                + this.utility + "*" + this.primaryJob + "*" + concatenateSecondaryJobsToSingleString(this.secondaryJob)
-                + "*" + notes;
+                + this.seniorityDate + "*" + this.gradePay + "*" + this.primaryJob + "*" 
+                + concatenateSecondaryJobsToSingleString(this.secondaryJob) + "*" + notes;
         return stringToPrint;
     }
     
