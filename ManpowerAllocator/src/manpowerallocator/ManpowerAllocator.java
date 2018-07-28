@@ -51,6 +51,7 @@ public class ManpowerAllocator extends JFrame
     
     private static JPanel existingEmployeeScreen;
     private static JPanel newEmployeeConfirmationScreen;
+    private static JPanel attendanceScreen;
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final double screenRatio = screenSize.getWidth() / screenSize.getHeight();
     private static final String[] DEPARTMENTS = {" ", "Materials", "PrePaint Chassis"};
@@ -117,6 +118,10 @@ public class ManpowerAllocator extends JFrame
         add(welcomeScreenPanels[0], "North");
         add(welcomeScreenPanels[1], "South");
         
+        Attendance attendance = new Attendance();
+        attendanceScreen = attendance.createNewAttendanceTab();
+        add(attendanceScreen);
+        attendanceScreen.setVisible(false);
             
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,6 +175,9 @@ public class ManpowerAllocator extends JFrame
             @Override
             public void actionPerformed(ActionEvent event) 
             {
+                upperPanel.setVisible(false);
+                lowerPanel.setVisible(false);
+                attendanceScreen.setVisible(true);
                 
             }
         });
