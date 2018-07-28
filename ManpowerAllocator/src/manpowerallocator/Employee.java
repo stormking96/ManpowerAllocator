@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Employee 
 {
-    String firstName;
-    String lastName;
-    String employeeID;
-    String seniorityDate;
-    String gradePay;
-    ArrayList<String> jobList = new ArrayList<>();
-    String notes;
+    private String firstName;
+    private String lastName;
+    private String employeeID;
+    private String seniorityDate;
+    private String gradePay;
+    private ArrayList<String> jobList = new ArrayList<>();
+    private String notes;
     
     public Employee(String last, String first, String ID, String seniorDate, String gradePaySelection, ArrayList<String> jobs, String note)
     {
