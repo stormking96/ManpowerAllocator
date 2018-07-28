@@ -89,12 +89,15 @@ public class ManpowerAllocator extends JFrame
         
         newEmployeeJobTab = createNewEmployeeJobTab();
         employeeTabPane.addTab("JOBS", newEmployeeJobTab);
+        employeeTabPane.setEnabledAt(1, false);
         
         newEmployeeNotesTab = createNewEmployeeNotesTab();
         employeeTabPane.addTab("NOTES", newEmployeeNotesTab);
+        employeeTabPane.setEnabledAt(2, false);
         
         newEmployeeSaveTab = createNewEmployeeSaveTab();
         employeeTabPane.addTab("SAVE", newEmployeeSaveTab);
+        employeeTabPane.setEnabledAt(3, false);
         
         newEmployeeOptionTab = createNewEmployeeOptionTab();
         employeeTabPane.addTab("OPTIONS", newEmployeeOptionTab);
@@ -326,6 +329,7 @@ public class ManpowerAllocator extends JFrame
                 employeeInfo.clear();
                 storeEmployeeInfo(employeeNewInfo);
                 employeeTabPane.setSelectedIndex(1);
+                employeeTabPane.setEnabledAt(1, true);
             }
         });
 
@@ -626,6 +630,7 @@ public class ManpowerAllocator extends JFrame
                 employeeJobsList.clear();
                 storeEmployeeJobs(selectedJobNamesWithJobType);
                 employeeTabPane.setSelectedIndex(2);
+                employeeTabPane.setEnabledAt(2, true);
             }
         });
         
@@ -683,6 +688,7 @@ public class ManpowerAllocator extends JFrame
             {
                 updateNotes(notesInput.getText());
                 employeeTabPane.setSelectedIndex(3);
+                employeeTabPane.setEnabledAt(3, true);
             }
         });
         
