@@ -41,6 +41,7 @@ public class ManpowerAllocator extends JFrame
 {
     private static JPanel[] welcomeScreenPanels;
     
+    private static JTabbedPane attendanceTabPane;
     private static JTabbedPane employeeTabPane;
     private static JPanel editEmployeeScreen;
     private static JPanel newEmployeeInfoTab;
@@ -51,7 +52,10 @@ public class ManpowerAllocator extends JFrame
     
     private static JPanel existingEmployeeScreen;
     private static JPanel newEmployeeConfirmationScreen;
-    private static JPanel attendanceScreen;
+    private static JPanel newAttendanceTab;
+    private static JPanel newAttendanceNotesTab;
+    private static JPanel newAttendanceSaveTab;
+    private static JPanel newAttendanceOptionsTab;
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private final double screenRatio = screenSize.getWidth() / screenSize.getHeight();
     private static final String[] DEPARTMENTS = {" ", "Materials", "PrePaint Chassis"};
@@ -80,6 +84,27 @@ public class ManpowerAllocator extends JFrame
         setPreferredSize(new Dimension((int)screenSize.getWidth(), (int)screenSize.getHeight()));
         
         addAndSortJobs();
+        
+        //Create Tab Pane and add all tabs for Attendance Selection 
+        attendanceTabPane = new JTabbedPane();
+        
+        Attendance attendance = new Attendance();
+        newAttendanceTab = attendance.createNewAttendanceTab();
+        attendanceTabPane.setFont(new Font( "Times New Roman", Font.PLAIN, 40));
+        
+        attendanceTabPane.addTab("Attendance", newAttendanceTab);
+        attendanceTabPane.setVisible(false);
+        
+        newAttendanceNotesTab = attendance.createNewAttendanceNotesTab();
+        attendanceTabPane.addTab("NOTES", newAttendanceNotesTab);
+        
+        newAttendanceSaveTab = attendance.createNewAttendanceSaveTab();
+        attendanceTabPane.addTab("SAVE", newAttendanceSaveTab);
+        
+        newAttendanceOptionsTab = attendance.createNewAttendanceOptionTab();
+        attendanceTabPane.addTab("OPTIONS", newAttendanceOptionsTab);
+        
+        add(attendanceTabPane);
         
         //Create Tab Pane and add all tabs for adding New Employee Selection 
         employeeTabPane = new JTabbedPane();
@@ -118,10 +143,7 @@ public class ManpowerAllocator extends JFrame
         add(welcomeScreenPanels[0], "North");
         add(welcomeScreenPanels[1], "South");
         
-        Attendance attendance = new Attendance();
-        attendanceScreen = attendance.createNewAttendanceTab();
-        add(attendanceScreen);
-        attendanceScreen.setVisible(false);
+        
             
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -177,7 +199,7 @@ public class ManpowerAllocator extends JFrame
             {
                 upperPanel.setVisible(false);
                 lowerPanel.setVisible(false);
-                attendanceScreen.setVisible(true);
+                attendanceTabPane.setVisible(true);
                 
             }
         });

@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
@@ -307,5 +308,142 @@ public class Attendance
             currentComponent.repaint();
         }
     }
+    public static JPanel createNewAttendanceNotesTab()
+    {
+        //Create Panel to hold components and set layout
+        JPanel newEmployeeNotesPanel = new JPanel();
+        
+        GridBagLayout layout = new GridBagLayout();
+        newEmployeeNotesPanel.setLayout(layout);
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        newEmployeeNotesPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        newEmployeeNotesPanel.setBackground(Color.DARK_GRAY);
+        Font f = new Font("Times", Font.PLAIN, 40);
+        
+        //Begin creating components to add
+        JTextArea notesText = new JTextArea("Notes:");
+        formatTextField(notesText, false, Color.WHITE, f);
+        
+        JTextArea notesInput = new JTextArea("N/A", 15, 40);
+        notesInput.setFont(f);
+        notesInput.setLineWrap(true);
+        notesInput.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(notesInput);
+        
+        JButton continueButton = new JButton("Continue");
+        continueButton.setFont(f);
+        
+        //Go to next tab when clicked
+        continueButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                
+            }
+        });
+        
+        //Add components using convenience method for gridBag layout
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        addObjects(notesText, newEmployeeNotesPanel, layout, gbc, 0, 0, 1, 1, .1, .1);
+        gbc.anchor = GridBagConstraints.NORTH;
+        addObjects(scrollPane, newEmployeeNotesPanel, layout, gbc, 1, 0, 1, 1, 1, 1);
+        gbc.anchor = GridBagConstraints.EAST;
+        addObjects(continueButton, newEmployeeNotesPanel, layout, gbc, 1, 1, 1, 1, 1, 1);
+        
+        return newEmployeeNotesPanel;
+    }
     
+    /**
+     * Method to create all components shown on save tab
+     * 
+     * @return JPanel containing all components for save tab
+     */
+    public static JPanel createNewAttendanceSaveTab()
+    {
+        //Create Panel to hold components and set layout
+        JPanel newEmployeeSavePanel = new JPanel();
+        
+        newEmployeeSavePanel.setLayout(new GridLayout(2,1));
+        newEmployeeSavePanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        newEmployeeSavePanel.setBackground(Color.DARK_GRAY);
+        Font f = new Font("Times", Font.PLAIN, 40);
+        
+        //Begin creating components to be shown
+        JButton saveButton = new JButton("Save Attendance");
+        saveButton.setFont(f);
+        newEmployeeSavePanel.add(saveButton);
+           
+        saveButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                
+            }
+        });
+        
+        JButton clearButton = new JButton("Clear Attendance Data");
+        clearButton.setFont(f);
+        newEmployeeSavePanel.add(clearButton);
+        
+        clearButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                
+            }
+        });
+                
+        return newEmployeeSavePanel;   
+    }
+    
+    /**
+     * Method to create all components shown on save tab
+     * 
+     * @return JPanel containing all components for save tab
+     */
+    public static JPanel createNewAttendanceOptionTab()
+    {
+        //Create Panel to hold components and set layout
+        JPanel newEmployeeOptionPanel = new JPanel();
+        
+        newEmployeeOptionPanel.setLayout(new GridLayout(2,1));
+        newEmployeeOptionPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        newEmployeeOptionPanel.setBackground(Color.DARK_GRAY);
+        Font f = new Font("Times", Font.PLAIN, 40);
+        
+        //Begin creating components to be shown
+        JButton printButton = new JButton("Print Attendance Report");
+        printButton.setFont(f);
+        newEmployeeOptionPanel.add(printButton);
+        
+        //Export jobs to printable file when clicked
+        printButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                
+            }
+        });
+        
+        JButton mainMenuButton = new JButton("Return to Main Menu");
+        mainMenuButton.setFont(f);
+        newEmployeeOptionPanel.add(mainMenuButton);
+        
+        //Return to main menu when clicked
+        mainMenuButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+               
+            }
+        });
+        
+        return newEmployeeOptionPanel;
+    }
 }
