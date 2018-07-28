@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -46,6 +47,7 @@ public class ManpowerAllocator extends JFrame
     private static JPanel newEmployeeJobTab;
     private static JPanel newEmployeeNotesTab;
     private static JPanel newEmployeeSaveTab;
+    private static JPanel newEmployeeOptionTab;
     
     private static JPanel existingEmployeeScreen;
     private static JPanel newEmployeeConfirmationScreen;
@@ -63,12 +65,15 @@ public class ManpowerAllocator extends JFrame
     private static ArrayList<JCheckBox> jobSelectedToRemove = new ArrayList<>();
     private static Employee newEmployee;
     private static JPanel newEmployeeConfirmationPanel;
+    private static ArrayList<String> employeeInfo = new ArrayList<>();
+    private static ArrayList<String> employeeJobsList = new ArrayList<>();
+    private static String employeeNotes;
     
             
     public ManpowerAllocator()
     {
         //Configure JFrame for displaying ManPowerAllocator GUI
-        super("ManpowerAllocator");        
+        super("Manpower Allocator");        
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         getContentPane().setBackground(Color.DARK_GRAY);
         setPreferredSize(new Dimension((int)screenSize.getWidth(), (int)screenSize.getHeight()));
@@ -90,6 +95,9 @@ public class ManpowerAllocator extends JFrame
         
         newEmployeeSaveTab = createNewEmployeeSaveTab();
         employeeTabPane.addTab("SAVE", newEmployeeSaveTab);
+        
+        newEmployeeOptionTab = createNewEmployeeOptionTab();
+        employeeTabPane.addTab("OPTIONS", newEmployeeOptionTab);
         
         add(employeeTabPane);
         employeeTabPane.setVisible(false);
@@ -275,9 +283,6 @@ public class ManpowerAllocator extends JFrame
         JTextArea nameUneditableText = new JTextArea("Name:");
         formatTextField(nameUneditableText, false, Color.WHITE, f);
         
-        JTextArea comma = new JTextArea(" , ");
-        formatTextField(comma, false, Color.WHITE, f); 
-        
         JTextField lastNameBox = new JTextField("Last", 12);
         lastNameBox.setFont(f);
         
@@ -306,52 +311,37 @@ public class ManpowerAllocator extends JFrame
         gradePaySelection.addItem("Team Leader");
         gradePaySelection.setFont(f);
         
-//        JButton saveButton = new JButton("Save");
-//        saveButton.setFont(f);
-//        saveButton.addActionListener(new ActionListener() 
-//        {
-//            @Override
-//            public void actionPerformed(ActionEvent event) 
-//            {
-//                String employeeLastName = lastNameBox.getText();
-//                String employeeFirstName = firstNameBox.getText();
-//                String employeeId = employeeIDInput.getText();
-//                String seniorityDate = seniorityDateInput.getText();
-//                String gradePay = gradePaySelection.getSelectedItem().toString();
-//                String primaryJob = primaryJobSelection.getSelectedItem().toString();
-//                String employeeNotes = notesInput.getText();
-//                newEmployee = new Employee(employeeLastName, employeeFirstName, 
-//                        employeeId, seniorityMonth, seniorityDay, seniorityYear, utility,
-//                        primaryJob, secondaryJobSelected, employeeNotes);
-                
-//                try 
-//                {
-//                    saveEmployeeToFile(newEmployee);  
-//                } 
-//                catch (IOException ex) 
-//                {
-//                    //Handle Later
-//                }
-//                addEmployeeNameToConfirmationScreen(newEmployee);
-//                resetAllFields(lastNameBox, firstNameBox, employeeIDInput, seniorityDateInputMonth, seniorityDateInputDay,
-//                        seniorityDateInputYear, yesOrNo, primaryJobSelection, secondaryJobsPane, notesInput);
-//                newEmployeeInfoTab.setVisible(false);
-//                newEmployeeConfirmationScreen.setVisible(true);
-//                
-//            }
-//        });
+        JButton continueButton = new JButton("Continue");
+        continueButton.setFont(f);
+        
+        //Save info and go to next tab when clicked
+        continueButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                String[] employeeNewInfo = {lastNameBox.getText(), firstNameBox.getText(),
+                    employeeIDInput.getText(), seniorityDateInput.getText(), 
+                    (String)gradePaySelection.getSelectedItem()};
+                employeeInfo.clear();
+                storeEmployeeInfo(employeeNewInfo);
+                employeeTabPane.setSelectedIndex(1);
+            }
+        });
 
         //Add all components to screen using convenience method for grid bag layout
-        addObjects(nameUneditableText, newEmployeePanel, layout, gbc, 0, 0, 1, 1, 0.1, 0.1);
-        addObjects(lastNameBox, newEmployeePanel, layout, gbc, 1, 0, 5, 1, 0.1, 0.1);
-        addObjects(comma, newEmployeePanel, layout, gbc, 3, 0, 1, 1, 0.1, 0.1);
-        addObjects(firstNameBox, newEmployeePanel, layout, gbc, 4, 0, 5, 1, 0.1, 0.1);
-        addObjects(employeeIDText, newEmployeePanel, layout, gbc, 0, 1, 3, 1, 0.1, 0.1);
-        addObjects(employeeIDInput, newEmployeePanel, layout, gbc, 1, 1, 2, 1, 0.1, 0.1);
-        addObjects(seniorityDateText, newEmployeePanel, layout, gbc, 0, 2, 2, 1, 0.1, 0.1);
-        addObjects(seniorityDateInput, newEmployeePanel, layout, gbc, 1, 2, 1, 1, 0.1, 0.1);
-        addObjects(gradeText, newEmployeePanel, layout, gbc, 0, 3, 1, 1, 0.1, 0.1);
-        addObjects(gradePaySelection, newEmployeePanel, layout, gbc, 1, 3, 1, 1, 0.1, 0.1);
+        addObjects(nameUneditableText, newEmployeePanel, layout, gbc, 0, 0, 1, 1, 1, 1);
+        addObjects(lastNameBox, newEmployeePanel, layout, gbc, 1, 0, 3, 1, 1, 1);
+        gbc.anchor = GridBagConstraints.WEST;
+        addObjects(firstNameBox, newEmployeePanel, layout, gbc, 2, 0, 5, 1, 1, 1);
+        addObjects(employeeIDText, newEmployeePanel, layout, gbc, 0, 1, 3, 1, 1, 1);
+        addObjects(employeeIDInput, newEmployeePanel, layout, gbc, 1, 1, 2, 1, 1, 1);
+        addObjects(seniorityDateText, newEmployeePanel, layout, gbc, 0, 2, 2, 1, 1, 1);
+        addObjects(seniorityDateInput, newEmployeePanel, layout, gbc, 1, 2, 1, 1, 1, 1);
+        addObjects(gradeText, newEmployeePanel, layout, gbc, 0, 3, 1, 1, 1, 1);
+        addObjects(gradePaySelection, newEmployeePanel, layout, gbc, 1, 3, 1, 1, 1, 1);
+        gbc.anchor = GridBagConstraints.EAST;
+        addObjects(continueButton, newEmployeePanel, layout, gbc, 5, 4, 1, 1, 1, 1);
          
         return newEmployeePanel;
     }
@@ -383,6 +373,7 @@ public class ManpowerAllocator extends JFrame
         JList jobsPossibleContainer = new JList();
         JList jobsSelectedContainer = new JList();
         ArrayList<String> selectedJobNames = new ArrayList<>();
+        ArrayList<String> selectedJobNamesWithJobType = new ArrayList<>();
         
         JComboBox jobTypeSelection = new JComboBox(JOB_TYPES);
         
@@ -541,6 +532,7 @@ public class ManpowerAllocator extends JFrame
                                 !currentBox.getText().contains("<Secondary>"))
                         {
                             currentBox.setText(currentBox.getText() + "<" + jobTypeSelection.getSelectedItem().toString() + ">");
+                            selectedJobNamesWithJobType.add(currentBox.getText());
                         }
                         
                         jobSelectedToAdd.add(currentBox);
@@ -578,11 +570,12 @@ public class ManpowerAllocator extends JFrame
                     if(currentBox.isSelected())
                     {
                         jobSelectedToRemove.add(currentBox);
+                        selectedJobNamesWithJobType.remove(currentBox.getText());
                         String jobToRemoveName = currentBox.getText();
                         
                         if(selectedJobNames.contains(jobToRemoveName))
                         {
-                            selectedJobNames.remove(jobToRemoveName);
+                            selectedJobNames.remove(jobToRemoveName);    
                         }
                         
                         jobsSelectedContainer.remove(currentBox);
@@ -621,6 +614,21 @@ public class ManpowerAllocator extends JFrame
         
         jobsPanel.setBackground(Color.DARK_GRAY);
         
+        JButton continueButton = new JButton("Continue");
+        continueButton.setFont(f);
+        
+        // Save info and go to next tab when clicked
+        continueButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                employeeJobsList.clear();
+                storeEmployeeJobs(selectedJobNamesWithJobType);
+                employeeTabPane.setSelectedIndex(2);
+            }
+        });
+        
         //Add all components to the main Panel using convenience method for gridBag layout
         addObjects(departmentText, newEmployeeJobPanel, layout, gbc, 0, 0, 1, 1, 0.1, 0.1);
         addObjects(departmentSelection, newEmployeeJobPanel, layout, gbc, 1, 0, 1, 1, 0.1, 0.1);
@@ -630,6 +638,8 @@ public class ManpowerAllocator extends JFrame
         addObjects(jobTypeSelection, newEmployeeJobPanel, layout, gbc, 5, 0, 1, 1, 0.1, 0.1);
         gbc.anchor = GridBagConstraints.CENTER;
         addObjects(jobsPanel, newEmployeeJobPanel, layout, gbc, 0, 1, 8, 1, 1, 1);
+        gbc.anchor = GridBagConstraints.EAST;
+        addObjects(continueButton, newEmployeeJobPanel, layout, gbc, 6, 2, 1, 1, 1, 1);
           
         return newEmployeeJobPanel;
     }
@@ -662,11 +672,27 @@ public class ManpowerAllocator extends JFrame
         notesInput.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(notesInput);
         
+        JButton continueButton = new JButton("Continue");
+        continueButton.setFont(f);
+        
+        //Go to next tab when clicked
+        continueButton.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) 
+            {
+                updateNotes(notesInput.getText());
+                employeeTabPane.setSelectedIndex(3);
+            }
+        });
+        
         //Add components using convenience method for gridBag layout
         gbc.anchor = GridBagConstraints.NORTHWEST;
         addObjects(notesText, newEmployeeNotesPanel, layout, gbc, 0, 0, 1, 1, .1, .1);
         gbc.anchor = GridBagConstraints.NORTH;
         addObjects(scrollPane, newEmployeeNotesPanel, layout, gbc, 1, 0, 1, 1, 1, 1);
+        gbc.anchor = GridBagConstraints.EAST;
+        addObjects(continueButton, newEmployeeNotesPanel, layout, gbc, 1, 1, 1, 1, 1, 1);
         
         return newEmployeeNotesPanel;
     }
@@ -681,7 +707,7 @@ public class ManpowerAllocator extends JFrame
         //Create Panel to hold components and set layout
         JPanel newEmployeeSavePanel = new JPanel();
         
-        newEmployeeSavePanel.setLayout(new GridLayout(3,1));
+        newEmployeeSavePanel.setLayout(new GridLayout(2,1));
         newEmployeeSavePanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         newEmployeeSavePanel.setBackground(Color.DARK_GRAY);
         Font f = new Font("Times", Font.PLAIN, 40);
@@ -696,7 +722,30 @@ public class ManpowerAllocator extends JFrame
             @Override
             public void actionPerformed(ActionEvent event) 
             {
+                String employeeLastName = employeeInfo.get(0);
+                String employeeFirstName = employeeInfo.get(1);
+                String employeeId = employeeInfo.get(2);
+                String seniorityDate = employeeInfo.get(3);
+                String gradePay = employeeInfo.get(4);
+                ArrayList<String> jobs = employeeJobsList;
+                String notes = employeeNotes;
+                newEmployee = new Employee(employeeLastName, employeeFirstName, 
+                        employeeId, seniorityDate, gradePay,
+                        jobs, notes);
                 
+                try 
+                {
+                    saveEmployeeToFile(newEmployee);  
+                } 
+                catch (IOException ex) 
+                {
+                    //Handle Later
+                }
+                addEmployeeNameToConfirmationScreen(newEmployee);
+                clearAllInputFields();
+                employeeTabPane.setSelectedIndex(0);
+                employeeTabPane.setVisible(false);
+                newEmployeeConfirmationScreen.setVisible(true);
             }
         });
         
@@ -709,14 +758,48 @@ public class ManpowerAllocator extends JFrame
             @Override
             public void actionPerformed(ActionEvent event) 
             {
+                clearAllInputFields();
+            }
+        });
+                
+        return newEmployeeSavePanel;   
+    }
+    
+    /**
+     * Method to create all components shown on save tab
+     * 
+     * @return JPanel containing all components for save tab
+     */
+    private static JPanel createNewEmployeeOptionTab()
+    {
+        //Create Panel to hold components and set layout
+        JPanel newEmployeeOptionPanel = new JPanel();
+        
+        newEmployeeOptionPanel.setLayout(new GridLayout(2,1));
+        newEmployeeOptionPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        newEmployeeOptionPanel.setBackground(Color.DARK_GRAY);
+        Font f = new Font("Times", Font.PLAIN, 40);
+        
+        //Begin creating components to be shown
+        JButton printButton = new JButton("Print Employee Matrix");
+        printButton.setFont(f);
+        newEmployeeOptionPanel.add(printButton);
+        
+        //Export jobs to printable file when clicked
+        printButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
                 
             }
         });
         
         JButton mainMenuButton = new JButton("Return to Main Menu");
         mainMenuButton.setFont(f);
-        newEmployeeSavePanel.add(mainMenuButton);
+        newEmployeeOptionPanel.add(mainMenuButton);
         
+        //Return to main menu when clicked
         mainMenuButton.addActionListener(new ActionListener() 
         {
             @Override
@@ -729,8 +812,7 @@ public class ManpowerAllocator extends JFrame
             }
         });
         
-        
-        return newEmployeeSavePanel;   
+        return newEmployeeOptionPanel;
     }
     
     private static JPanel createNewEmployeeConfirmationScreen()
@@ -756,7 +838,9 @@ public class ManpowerAllocator extends JFrame
             public void actionPerformed(ActionEvent event) 
             {
                 newEmployeeConfirmationScreen.setVisible(false);
-                newEmployeeInfoTab.setVisible(true);
+                clearAllInputFields();
+                employeeTabPane.setSelectedIndex(0);
+                employeeTabPane.setVisible(true);
             }
         
         });
@@ -768,6 +852,7 @@ public class ManpowerAllocator extends JFrame
             @Override
             public void actionPerformed(ActionEvent event) 
             {
+                clearAllInputFields();
                 newEmployeeConfirmationScreen.setVisible(false);
                 welcomeScreenPanels[0].setVisible(true);
                 welcomeScreenPanels[1].setVisible(true);
@@ -786,6 +871,8 @@ public class ManpowerAllocator extends JFrame
         return newEmployeeConfirmationPanel;
     }
     
+    
+    
     private static void addEmployeeNameToConfirmationScreen(Employee newEmployee)
     {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -801,6 +888,39 @@ public class ManpowerAllocator extends JFrame
         gbc.ipadx = 30;
 
         addObjects(newEmployeeName, newEmployeeConfirmationPanel, layout, gbc, 0, 0, 1, 1, 1, 1);
+    }
+    
+    private static void storeEmployeeInfo(String[] infoToAdd)
+    {
+        employeeInfo.addAll(Arrays.asList(infoToAdd));
+    }
+    
+    private static void storeEmployeeJobs(ArrayList<String> jobsToStore)
+    {
+        for(String job : jobsToStore)
+        {
+            employeeJobsList.add(job);
+        }
+    }
+    
+    private static void updateNotes(String note)
+    {
+        employeeNotes = note;
+    }
+    
+    private static void clearAllInputFields()
+    {
+        newEmployeeInfoTab = createNewEmployeeInfoTab();
+        newEmployeeJobTab = createNewEmployeeJobTab();
+        newEmployeeNotesTab = createNewEmployeeNotesTab();
+        employeeInfo.clear();
+        employeeJobsList.clear();
+        employeeTabPane.removeAll();
+        employeeTabPane.addTab("INFO", newEmployeeInfoTab);
+        employeeTabPane.addTab("JOBS", newEmployeeJobTab);
+        employeeTabPane.addTab("NOTES", newEmployeeNotesTab);
+        employeeTabPane.addTab("SAVE", newEmployeeSaveTab);
+        employeeTabPane.addTab("OPTIONS", newEmployeeOptionTab);
     }
     
     private static void removeJobTypeFromJob(ArrayList<String> selectedJobNames, 
@@ -863,29 +983,6 @@ public class ManpowerAllocator extends JFrame
         yourcontainer.add(componente, gbc);
         
     }
-    
-//    private static void resetAllFields(JTextField last, JTextField first, JTextField id, JComboBox mm, JComboBox dd, JComboBox yy,
-//            JComboBox yOrN, JComboBox pJob, JScrollPane scrollBar, JTextArea notes)
-//    {
-//        last.setText("Last");
-//        first.setText("First");
-//        id.setText("12345");
-//        mm.setSelectedIndex(0);
-//        dd.setSelectedIndex(0);
-//        yy.setSelectedIndex(0);
-//        yOrN.setSelectedIndex(0);
-//        pJob.setSelectedIndex(0);
-//        for (JCheckBox currentBox : checkBoxes) 
-//        {
-//            if(currentBox.isSelected())
-//            {
-//                currentBox.setSelected(false);
-//            }
-//        }
-//        JScrollBar verticalScrollBar = scrollBar.getVerticalScrollBar();
-//        verticalScrollBar.setValue(verticalScrollBar.getMinimum());
-//        notes.setText("N/A");
-//    }
     
     public static void formatTextField(JTextComponent textFieldToFormat, boolean isEditable, Color fontColor, Font f)
     {

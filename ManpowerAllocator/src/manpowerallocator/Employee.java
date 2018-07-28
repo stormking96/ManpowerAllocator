@@ -9,19 +9,17 @@ public class Employee
     String employeeID;
     String seniorityDate;
     String gradePay;
-    String primaryJob;
-    ArrayList<String> secondaryJob = new ArrayList<>();
+    ArrayList<String> jobList = new ArrayList<>();
     String notes;
     
-    public Employee(String last, String first, String ID, String seniorDate, String gradePaySelection, String pJob, ArrayList<String> sJob, String note)
+    public Employee(String last, String first, String ID, String seniorDate, String gradePaySelection, ArrayList<String> jobs, String note)
     {
         firstName = first;
         lastName = last;
         employeeID = ID;
         seniorityDate = seniorDate;
         gradePay = gradePaySelection;
-        primaryJob = pJob;
-        secondaryJob = (ArrayList<String>) sJob.clone();
+        jobList = (ArrayList<String>) jobs.clone();
         notes = note;
     }
     
@@ -32,8 +30,7 @@ public class Employee
         employeeID = null;
         seniorityDate = null;
         gradePay = null;
-        primaryJob = null;
-        secondaryJob = null;
+        jobList = null;
         notes = null;     
     }
     
@@ -87,30 +84,21 @@ public class Employee
         return gradePay;
     }
     
-    public void setPrimaryJob(String primary)
+    
+    public void setJobs(ArrayList<String> jobs)
     {
-        primaryJob = primary;
+        jobList = (ArrayList<String>) jobs.clone();
     }
     
-    public String getPrimaryJob()
+    public ArrayList<String> getJobs()
     {
-        return primaryJob;
+        return jobList;
     }
     
-    public void setSecondaryJobs(ArrayList<String> jobs)
-    {
-        secondaryJob = (ArrayList<String>) jobs.clone();
-    }
-    
-    public ArrayList<String> getSecondaryJobs()
-    {
-        return secondaryJob;
-    }
-    
-    private String concatenateSecondaryJobsToSingleString(ArrayList<String> secondJobArray)
+    private String concatenateJobsToSingleString(ArrayList<String> jobArray)
     {
         StringBuilder build = new StringBuilder();
-        for(String job : secondJobArray)
+        for(String job : jobArray)
         {
             build.append(job);
             build.append(";");
@@ -132,8 +120,8 @@ public class Employee
     public String toString()
     {
         String stringToPrint = this.employeeID + "*" + this.lastName + "*" + this.firstName + "*"
-                + this.seniorityDate + "*" + this.gradePay + "*" + this.primaryJob + "*" 
-                + concatenateSecondaryJobsToSingleString(this.secondaryJob) + "*" + notes;
+                + this.seniorityDate + "*" + this.gradePay + "*" 
+                + concatenateJobsToSingleString(this.jobList) + "*" + notes;
         return stringToPrint;
     }
     
