@@ -1,3 +1,24 @@
-99565*Thayer*Matthew*05/27/14*Utility*Western Star Cab<Primary>;Audit 1<Secondary>;Dispo<Secondary>;Harness Kitting 1<Secondary>;Harness Kitting 2<Secondary>;Refurb<Secondary>;*Works well with others
-need to train on  B Dock
-10278*King*Storm*03/19/18*No*Dock M/H 3<Primary>;*good worker
+10278*KING*STORM*03/18/2018*No*Audit 1<Primary>;Dock M/H 1<Secondary>;Dock M/H 12<Secondary>;*N/A*P*
+99565*THAYER*MATT*05/27/2014*No*Dispo<Primary>;Harness Kitting 1<Secondary>;Harness Kitting 2<Secondary>;*N/A*P*
+12934*PEREZ*KAREN*05/20/2014*No*Dock M/H 1<Primary>;Dock M/H 2<Secondary>;Dock M/H 3<Secondary>;*N/A*P*
+15236*RABB*RHIANNON*07/28/2016*No*Dock M/H 12<Primary>;Dock M/H 4<Secondary>;Dock M/H 5<Secondary>;*N/A*P*
+30245*DAVIS*BERNADETTE*04/06/2014*No*Dock M/H 2<Primary>;Dock M/H 6<Secondary>;Dock M/H 7<Secondary>;*N/A*P*
+49234*SMITH*JOHN*07/05/2000*No*Dock M/H 3<Primary>;Dock Returns<Secondary>;Harness Kitting 1<Secondary>;*N/A*P*
+84234*DOE*JON*05/18/2013*No*Dock M/H 4<Primary>;Harness Kitting 2<Secondary>;Refurb<Secondary>;*N/A*P*
+64329*BROWN*JESSICA*03/05/2011*No*Dock M/H 5<Primary>;Refurb (Store Operator)<Secondary>;Shipping 1<Secondary>;*N/A*P*
+30904*EDWARDS*RANDY*02/06/2012*No*Dock M/H 6<Primary>;Western Star Cab<Secondary>;Western Star PCH<Secondary>;*N/A*P*
+50373*DOE*JANE*08/09/2012*No*Dock M/H 7<Primary>;Audit 1<Secondary>;Dispo<Secondary>;*N/A*P*
+86543*RAY*DORA*09/22/2009*No*Dock Returns<Primary>;Dock M/H 1<Secondary>;Dock M/H 12<Secondary>;*N/A*P*
+50954*CHARLES*RAYMOND*06/09/2011*No*Harness Kitting 1<Primary>;Dock M/H 2<Secondary>;Dock M/H 3<Secondary>;*N/A*P*
+40405*RABB*TARA*05/27/2014*No*Harness Kitting 2<Primary>;Dock M/H 4<Secondary>;Dock M/H 5<Secondary>;*N/A*P*
+54376*OMANS*JOHN*06/12/2003*No*Refurb<Primary>;Refurb (Store Operator)<Secondary>;Shipping 1<Secondary>;*N/A*P*
+49753*BENTLEY*EMILY*08/12/2003*No*Refurb (Store Operator)<Primary>;Western Star Cab<Secondary>;Western Star PCH<Secondary>;*N/A*P*
+60876*KING*TERRY*09/18/2013*No*Shipping 1<Primary>;Audit 1<Secondary>;Dock M/H 3<Secondary>;*N/A*P*
+59872*THAYER*MIKE*06/09/1990*No*Western Star Cab<Primary>;Harness Kitting 2<Secondary>;Shipping 1<Secondary>;*N/A*P*
+30209*SANDS*DINA*04/20/1999*No*Dock M/H 5<Secondary>;Dock M/H 7<Secondary>;Western Star PCH<Primary>;*N/A*P*
+20202*KING*PORTIA*04/18/2002*Utility*Audit 1<Primary>;Dispo<Secondary>;Dock M/H 1<Secondary>;Dock M/H 12<Secondary>;Dock M/H 2<Secondary>;*N/A*P*
+50985*CHUNG*ARA*05/19/2003*Utility*Dock M/H 3<Primary>;Dock M/H 4<Secondary>;Dock M/H 5<Secondary>;Dock M/H 6<Secondary>;Dock M/H 7<Secondary>;*N/A*P*
+17432*HALE*SARAH*04/05/2012*Utility*Dock Returns<Primary>;Harness Kitting 1<Secondary>;Harness Kitting 2<Secondary>;Refurb<Secondary>;Refurb (Store Operator)<Secondary>;*N/A*P*
+30908*DANIELS*PAIGE*06/09/2014*No*Dispo<Training>;*N/A*P*
+40923*LEE*JENNA*08/09/2003*No*Harness Kitting 1<Training>;*N/A*P*
+50988*RICE*SUNNI*06/09/2000*Team Leader*Audit 1<Secondary>;Dispo<Secondary>;Dock M/H 1<Secondary>;Dock M/H 7<Secondary>;Harness Kitting 1<Secondary>;*N/A*P*

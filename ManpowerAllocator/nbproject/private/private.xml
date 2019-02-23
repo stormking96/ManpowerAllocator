@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/storm/Documents/NetBeansProjects/ManpowerAllocator/src/manpowerallocator/ManpowerAllocator.java</file>
+            <file>file:/C:/Users/storm/Documents/GitHub/ManpowerAllocator/ManpowerAllocator/src/manpowerallocator/Options.java</file>
+            <file>file:/C:/Users/storm/Documents/GitHub/ManpowerAllocator/ManpowerAllocator/src/manpowerallocator/Allocation.java</file>
+            <file>file:/C:/Users/storm/Documents/GitHub/ManpowerAllocator/ManpowerAllocator/EmployeeFile.txt</file>
+            <file>file:/C:/Users/storm/Documents/GitHub/ManpowerAllocator/ManpowerAllocator/DepartmentsFile.txt</file>
+            <file>file:/C:/Users/storm/Documents/GitHub/ManpowerAllocator/ManpowerAllocator/src/manpowerallocator/ManpowerAllocator.java</file>
+            <file>file:/C:/Users/storm/Documents/GitHub/ManpowerAllocator/ManpowerAllocator/src/manpowerallocator/ExistingEmployee.java</file>
         </group>
     </open-files>
 </project-private>

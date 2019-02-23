@@ -11,6 +11,7 @@ public class Employee
     private String gradePay;
     private ArrayList<String> jobList = new ArrayList<>();
     private String notes;
+    private String attendance;
     
     public Employee(String last, String first, String ID, String seniorDate, String gradePaySelection, ArrayList<String> jobs, String note)
     {
@@ -21,6 +22,7 @@ public class Employee
         gradePay = gradePaySelection;
         jobList = (ArrayList<String>) jobs.clone();
         notes = note;
+        attendance = "P";
     }
     
     public Employee()
@@ -31,7 +33,8 @@ public class Employee
         seniorityDate = null;
         gradePay = null;
         jobList = null;
-        notes = null;     
+        notes = null;   
+        attendance = "P";
     }
     
     public void setFirstName(String first)
@@ -116,12 +119,23 @@ public class Employee
         return notes;
     }
     
+    public void setAttendance(String attend)
+    {
+        attendance = attend;
+    }
+    
+    public String getAttendance()
+    {
+        return attendance;
+    }
+    
     @Override
     public String toString()
     {
         String stringToPrint = this.employeeID + "*" + this.lastName + "*" + this.firstName + "*"
                 + this.seniorityDate + "*" + this.gradePay + "*" 
-                + concatenateJobsToSingleString(this.jobList) + "*" + notes;
+                + concatenateJobsToSingleString(this.jobList) + "*" + notes + "*" + 
+                attendance + "*";
         return stringToPrint;
     }
     
